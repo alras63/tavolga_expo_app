@@ -3,7 +3,11 @@ import { Text, View } from "react-native";
 import InputSpinner from "react-native-input-spinner";
 import { List, TextInput } from "react-native-paper";
 
-export default function ExpandedList({ item }) {
+export default function ExpandedList({
+  item,
+  ocenkaStorage,
+  setOcenkaStorage,
+}) {
   const [expanded, setExpanded] = React.useState(false);
   const [text, setText] = React.useState(item.scoreUser[0]);
 
@@ -21,7 +25,6 @@ export default function ExpandedList({ item }) {
     return crtrpunct;
   };
 
-  console.log(item);
   return (
     <List.Accordion
       key={item.id}
@@ -31,21 +34,34 @@ export default function ExpandedList({ item }) {
       onPress={handlePress}
     >
       <View>
-      {criteriaItemsPuncts(item)}
-      <Text>{item.description}</Text>
-      <InputSpinner
-        max={item.maxScore}
-        min={item.minScore}
-        step={item.stepScore ? item.stepScore : 1}
-        colorMax={"#f04048"}
-        colorMin={"#00ACAB"}
-        value={item.scoreUser[0]}
-        onChange={(num) => {
-          console.log(num);
-        }}
-        style={{margin: 10, maxWidth: "60%", marginHorizontal: "auto"}}
-        skin="paper"
-      />
+        {criteriaItemsPuncts(item)}
+        <Text>{item.description}</Text>
+        <InputSpinner
+          max={item.maxScore}
+          min={item.minScore}
+          step={item.stepScore ? item.stepScore : 1}
+          colorMax={"#f04048"}
+          colorMin={"#00ACAB"}
+          value={item.scoreUser[0]}
+          onChange={(num) => {
+            if (
+              ocenkaStorage.find((ocenka) => {
+                return ocenka.id == item.id;
+              })
+            ) {
+
+              ocenkaStorage.find((ocenka) => {
+                return ocenka.id == item.id;
+              }).value = num;
+          
+              setOcenkaStorage(ocenkaStorage);
+            } else {
+              setOcenkaStorage([...ocenkaStorage, { id: item.id, value: num }]);
+            }
+          }}
+          style={{ margin: 10, maxWidth: "60%", marginHorizontal: "auto" }}
+          skin="paper"
+        />
       </View>
     </List.Accordion>
   );

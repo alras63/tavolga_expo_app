@@ -34,7 +34,6 @@ export default function NominationUsers({ route, navigation }) {
 
   const getUserData = async (dispatch) => {
     const user_data = await storage.getData("user_data");
-    console.log(user_data);
     setData(user_data);
     setLoading(false);
   };

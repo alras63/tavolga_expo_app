@@ -17,7 +17,7 @@ import {
   Text,
 } from "react-native-paper";
 import { View } from "react-native";
-import { gettingData } from "../helpers/apiRequest";
+import { gettingData, postData } from "../helpers/apiRequest";
 import { ScrollView } from "react-native-gesture-handler";
 import ExpandedList from "../components/ExpandedList";
 
@@ -37,12 +37,29 @@ export default function Nominations({ route, navigation }) {
 
   const [dataA, setOcenka] = useState();
 
+  const [ocenkaStorage, setOcenkaStorage] = useState([]);
+
+
+
+
   const getUserData = async (dispatch) => {
     const user_data = await storage.getData("user_data");
-    console.log(user_data);
     setData(user_data);
     setLoading(false);
   };
+
+  const ChangeMark = async (value, ppid) => {
+    let data = new FormData()
+    data.append("score", Number(value))
+    postData(`https://hakaton.alras63.ru/api/update-score/${user_id}/${ppid}`, data)
+    .then(res => console.log(res))
+  }
+
+  const saveOcenki = async(dispatch) => {
+    ocenkaStorage.forEach(ocenka => {
+      ChangeMark(ocenka.value, ocenka.id)
+    });
+  }
 
   const fetchActivities = async (dispatch) => {
     gettingData(
@@ -146,7 +163,7 @@ export default function Nominations({ route, navigation }) {
     for (let step in criterias) {
       for (let item in criterias[step]) {
         crtr.push(
-          <ExpandedList item={criterias[step][item][0]} />
+          <ExpandedList setOcenkaStorage={setOcenkaStorage} ocenkaStorage={ocenkaStorage} item={criterias[step][item][0]} />
         );
       }
     }
@@ -171,11 +188,17 @@ export default function Nominations({ route, navigation }) {
         {loadingA ? (
           <ActivityIndicator />
         ) : (
-          <ScrollView>
+          <>
+          <ScrollView style={{maxHeight: "80%"}}>
             {userItem}
             {ratingItem}
             {ocenkaItem}
+          
           </ScrollView>
+            <Button mode="contained" onPress={saveOcenki}>
+            Сохранить оценки
+          </Button>
+          </>
         )}
       </View>
     </View>

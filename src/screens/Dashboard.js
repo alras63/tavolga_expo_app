@@ -27,7 +27,7 @@ export default function Dashboard({ navigation }) {
  
      
         const user_data = await storage.getData('user_data');
-        console.log(user_data);
+    
         setData(user_data)
         setLoading(false)
       
@@ -41,7 +41,6 @@ export default function Dashboard({ navigation }) {
     });
      
   const activities = await storage.getData('activities');
-   console.log(activities);
    setActivities(activities)
    setActivitiesLoading(false)
  

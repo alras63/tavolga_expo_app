@@ -1,12 +1,14 @@
 import * as SecureStore from 'expo-secure-store';
 export const postData = async function(url = '', data = {}) {
+    let token = await SecureStore.getItemAsync('secure_token');
     const response = await fetch(url, {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
