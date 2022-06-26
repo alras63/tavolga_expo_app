@@ -195,7 +195,7 @@ export default function Nominations({ route, navigation }) {
             {ocenkaItem}
           
           </ScrollView>
-            <Button mode="contained" onPress={saveOcenki}>
+            <Button mode="contained" onPress={saveOcenki} disabled = { ocenkaStorage.length === 0 }>
             Сохранить оценки
           </Button>
           </>
