@@ -47,11 +47,9 @@ export default function NominationUsers({ route, navigation }) {
     ).then(async (data) => {
  
       await storage.storeData("usersN", JSON.stringify(data));
+      setUsersN(data);
+      setUsersNLoading(false);
     });
-
-    const usersN = await storage.getData("usersN");
-    setUsersN(usersN);
-    setUsersNLoading(false);
   };
   useEffect(() => {
     getUserData();

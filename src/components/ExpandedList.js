@@ -16,6 +16,7 @@ export default function ExpandedList({
     let crtrpunct = [];
     crtrpunct.push(
       <List.Item
+        key={step.id}
         title={`${step.name}`}
         titleNumberOfLines={10}
         titleStyle={{ fontSize: 13 }}

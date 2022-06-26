@@ -38,12 +38,9 @@ export default function Dashboard({ navigation }) {
     gettingData('https://hakaton.alras63.ru/api/events')
     .then(async (data) => {
         await storage.storeData('activities', JSON.stringify(data));
+        setActivities(data)
+        setActivitiesLoading(false)
     });
-     
-  const activities = await storage.getData('activities');
-   setActivities(activities)
-   setActivitiesLoading(false)
- 
 
 };
     useEffect(() => {

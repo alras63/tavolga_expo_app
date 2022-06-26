@@ -85,12 +85,11 @@ export default function Nominations({ route, navigation }) {
         }
 
         setRating(rating);
-      });
-    });
 
-    const ocenka = await storage.getData("ocenka");
-    setOcenka(ocenka);
-    setOcenkaLoading(false);
+      });
+      setOcenka(data);
+      setOcenkaLoading(false);
+    });
   };
 
   useEffect(() => {

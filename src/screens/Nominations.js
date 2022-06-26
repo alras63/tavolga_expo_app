@@ -39,13 +39,9 @@ export default function Nominations({ route, navigation }) {
     gettingData('https://hakaton.alras63.ru/api/nominations-event/' + event_id)
     .then(async (data) => {
         await storage.storeData('nominations', JSON.stringify(data));
-    });
-     
-  const nomination = await storage.getData('nominations');
-   setNominations(nomination)
-   setNominationsLoading(false)
- 
-
+        setNominations(data)
+        setNominationsLoading(false)
+      }); 
 };
     useEffect(() => {
       getUserData();
